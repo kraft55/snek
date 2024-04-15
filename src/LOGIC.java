@@ -17,6 +17,7 @@ public class Logic extends JFrame implements KeyListener{
 	Food food;								//The food object
 	Direction direction;
 	GUI gui;
+	MainMenu menu;
 	int score;
 	LinkedList<Direction> nextdirection;
 	
@@ -32,6 +33,7 @@ public class Logic extends JFrame implements KeyListener{
 		nextdirection.add(Direction.RIGHT);
 		food = new Food(width-squaresize, height-squaresize);		//Food Object
 		gui = new GUI(width, height+20, squaresize, list);
+		menu = new MainMenu(width, height);
 		score = 0;
 
 	}
@@ -80,18 +82,22 @@ public class Logic extends JFrame implements KeyListener{
 		}
 		return false;
 	}
+	public void mainmenu(JFrame frame){
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.add(menu);
+		frame.setFocusable(true);
+		frame.addKeyListener(this);
+		frame.setSize(width*squaresize+2*squaresize, height*squaresize+2*squaresize);
+		frame.setVisible(true);
+	}
+	public void play(JFrame frame) throws Exception{
+		frame.remove(menu);
+		frame.add(gui);
+		frame.setFocusable(true);
 
-	public void game() throws Exception{	//Exception for sleep()
-		
-		JFrame f = new JFrame("Snake by Michael");
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.add(gui);
-		f.setFocusable(true);
-
-		f.addKeyListener(this);
-		f.setSize(width*squaresize+2*squaresize, height*squaresize+2*squaresize);
-		f.setVisible(true);
-		
+		frame.addKeyListener(this);
+		frame.setSize(width*squaresize+2*squaresize, height*squaresize+2*squaresize);
+		frame.setVisible(true);
 		for(boolean b = true;b==true;){
 			b = step();
 			gui.setList(list);						//Gives gui the updated list
@@ -100,6 +106,24 @@ public class Logic extends JFrame implements KeyListener{
 			
 		}
 		System.out.println("Game Over");
+	}
+	public void game() throws Exception{	//Exception for sleep()
+		
+		JFrame f = new JFrame("Snake by Michael");
+		mainmenu(f);
+		while(!menu.getGamestarted()){
+			Thread.sleep(50);
+		}
+		menu.setGamestarted(false);
+		play(f);
+		f.add(gui);
+		f.setFocusable(true);
+
+		f.addKeyListener(this);
+		f.setSize(width*squaresize+2*squaresize, height*squaresize+2*squaresize);
+		f.setVisible(true);
+		
+
 		//music();
 		
 	}
