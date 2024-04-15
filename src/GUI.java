@@ -19,7 +19,7 @@ public class GUI extends JPanel{
 	}
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
-		this.setBackground(Color.GRAY);
+		this.setBackground(Color.LIGHT_GRAY);
 	
 		g.setFont(new Font("Serif", Font.BOLD, 20));
 		g.setColor(Color.BLACK);
