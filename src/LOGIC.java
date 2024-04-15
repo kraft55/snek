@@ -17,6 +17,7 @@ public class Logic extends JFrame implements KeyListener{
 	Direction direction;
 	GUI gui;
 	int score;
+	Direction nextdirection;
 	
 	public Logic(int w, int h, int s){
 		width = w;
@@ -26,6 +27,7 @@ public class Logic extends JFrame implements KeyListener{
 		currentY = h/2;					
 		list = new ArrayList<Square>();
 		setDirection(Direction.RIGHT);		//Right = default direction
+		nextdirection = Direction.RIGHT;
 		food = new Food(width-squaresize, height-squaresize);		//Food Object
 		gui = new GUI(width, height+20, squaresize, list);
 		score = 0;
@@ -100,6 +102,7 @@ public class Logic extends JFrame implements KeyListener{
 		
 	}
 	public boolean step() throws Exception{			//Returns false if you hit the snake
+		setDirection(nextdirection);
 		currentX+=x;								//Adds direction change to the current position
 		currentY+=y;
 		outOfBounds();								//Checks for out of bounds and puts snake at opposite direction
@@ -138,22 +141,22 @@ public class Logic extends JFrame implements KeyListener{
 	public void keyPressed(KeyEvent e){
 		if(e.getKeyCode() == KeyEvent.VK_RIGHT){
 			if(direction != Direction.LEFT){
-				setDirection(Direction.RIGHT);
+				nextdirection = Direction.RIGHT;
 			}
 		}
 		if(e.getKeyCode() == KeyEvent.VK_LEFT){
 			if(direction != Direction.RIGHT){
-				setDirection(Direction.LEFT);
+				nextdirection = Direction.LEFT;
 			}
 		}
 		if(e.getKeyCode() == KeyEvent.VK_UP){
 			if(direction != Direction.DOWN){
-				setDirection(Direction.UP);
+				nextdirection = Direction.UP;
 			}
 		}
 		if(e.getKeyCode() == KeyEvent.VK_DOWN){
 			if(direction != Direction.UP){
-			setDirection(Direction.DOWN);
+				nextdirection = Direction.DOWN;
 			}
 		}
 	}
