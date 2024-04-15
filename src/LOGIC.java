@@ -33,7 +33,7 @@ public class Logic extends JFrame implements KeyListener{
 		nextdirection.add(Direction.RIGHT);
 		food = new Food(width-squaresize, height-squaresize);		//Food Object
 		gui = new GUI(width, height+20, squaresize, list);
-		menu = new MainMenu(width, height);
+		menu = new MainMenu(width, height, squaresize);
 		score = 0;
 
 	}
@@ -112,9 +112,10 @@ public class Logic extends JFrame implements KeyListener{
 		JFrame f = new JFrame("Snake by Michael");
 		mainmenu(f);
 		while(!menu.getGamestarted()){
-			Thread.sleep(50);
+			Thread.sleep(100);
 		}
 		menu.setGamestarted(false);
+		f = new JFrame("Snake");
 		play(f);
 		f.add(gui);
 		f.setFocusable(true);
