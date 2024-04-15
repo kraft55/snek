@@ -35,7 +35,7 @@ public class GUI extends JPanel{
 		g.drawString("Score: "+100*score, 30, 30);
 		if(lost){
 			g.setFont(new Font("Serif", Font.BOLD, 40));
-			g.drawString("You did a lose! :^) - Score: "+100*score, 100, (height*squaresize)/2);
+			g.drawString("You lose! :^) - Score: "+100*score, 100, (height*squaresize)/2);
 		}
 	}
 	public void setList(ArrayList<Square> l){

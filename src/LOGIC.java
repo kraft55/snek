@@ -7,7 +7,7 @@ import javax.sound.sampled.*;
 import javax.swing.*;
 import java.util.ArrayList;
 
-public class LOGIC extends JFrame implements KeyListener{
+public class Logic extends JFrame implements KeyListener{
 	
 	int width, height, squaresize;			//Game Dimensions + Pixel size of squares
 	int x,y,currentX,currentY;				//x,y = directions of movement(left: x=-1;y=0) ; Currentx/y = Postition of snake head
@@ -18,7 +18,7 @@ public class LOGIC extends JFrame implements KeyListener{
 	GUI gui;
 	int score;
 	
-	public LOGIC(int w, int h, int s){
+	public Logic(int w, int h, int s){
 		width = w;
 		height = h;
 		squaresize = s;
