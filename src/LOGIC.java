@@ -76,7 +76,7 @@ public class Logic extends JFrame implements KeyListener{
 			int headX = list.get(list.size()-1).getx();			
 			int headY = list.get(list.size()-1).gety();
 			if(list.get(i).getx()==headX&&list.get(i).gety()==headY){		//Head position equal to a snake piece position == hit
-				System.out.println(headX+""+headY);
+				System.out.println(headX+"-"+headY);
 				return true;
 			}
 		}
@@ -109,24 +109,40 @@ public class Logic extends JFrame implements KeyListener{
 	}
 	public void game() throws Exception{	//Exception for sleep()
 		
-		JFrame f = new JFrame("Snake by Michael");
-		mainmenu(f);
+		JFrame menuframe = new JFrame("Snek");
+		mainmenu(menuframe);
 		while(!menu.getGamestarted()){
 			Thread.sleep(100);
 		}
 		menu.setGamestarted(false);
-		f = new JFrame("Snake");
-		play(f);
-		f.add(gui);
+		menuframe.setVisible(false);
+		JFrame gameframe = new JFrame("Snek");
+		play(gameframe);
+		while(!gui.getMenu()){
+			Thread.sleep(100);
+		}
+		gui.setMenu(false);
+		gameframe.dispose();
+		menuframe.dispose();
+		restart();
+		/*f.add(gui);
 		f.setFocusable(true);
 
 		f.addKeyListener(this);
 		f.setSize(width*squaresize+2*squaresize, height*squaresize+2*squaresize);
 		f.setVisible(true);
-		
+		*/
 
 		//music();
 		
+	}
+	public void restart() throws Exception{
+		list = new ArrayList<Square>();
+		currentX = width/2;						//Snake starts in the middle
+		currentY = height/2;					
+		score = 0;
+		gui = new GUI(width, height+20, squaresize, list);
+		game();
 	}
 	public boolean step() throws Exception{			//Returns false if you hit the snake
 		if(!nextdirection.isEmpty()){

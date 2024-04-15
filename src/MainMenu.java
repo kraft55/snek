@@ -4,14 +4,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MainMenu extends JPanel implements ActionListener{
-	private int width, height, squaresize;
+	private int width, height;
 	private JButton button;
 	private JButton exitbutton;
 	private boolean gamestarted = false;
 	public MainMenu(int w, int h, int ss){
 		width = w;
 		height = h;
-		squaresize = ss;
 		button = new JButton("Play"); 
 		exitbutton = new JButton("Quit");
 		button.setLayout(null);
