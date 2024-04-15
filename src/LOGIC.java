@@ -26,8 +26,8 @@ public class Logic extends JFrame implements KeyListener{
 		currentY = h/2;					
 		list = new ArrayList<Square>();
 		setDirection(Direction.RIGHT);		//Right = default direction
-		food = new Food(width, height);		//Food Object
-		gui = new GUI(width, height, squaresize, list);
+		food = new Food(width-squaresize, height-squaresize);		//Food Object
+		gui = new GUI(width, height+20, squaresize, list);
 		score = 0;
 
 	}
@@ -85,7 +85,7 @@ public class Logic extends JFrame implements KeyListener{
 		f.setFocusable(true);
 
 		f.addKeyListener(this);
-		f.setSize(width*squaresize+squaresize, height*squaresize+squaresize);
+		f.setSize(width*squaresize+2*squaresize, height*squaresize+2*squaresize);
 		f.setVisible(true);
 		
 		for(boolean b = true;b==true;){
