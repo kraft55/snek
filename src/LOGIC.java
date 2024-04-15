@@ -6,6 +6,7 @@ import javax.sound.sampled.*;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Logic extends JFrame implements KeyListener{
 	
@@ -17,7 +18,7 @@ public class Logic extends JFrame implements KeyListener{
 	Direction direction;
 	GUI gui;
 	int score;
-	Direction nextdirection;
+	LinkedList<Direction> nextdirection;
 	
 	public Logic(int w, int h, int s){
 		width = w;
@@ -27,7 +28,8 @@ public class Logic extends JFrame implements KeyListener{
 		currentY = h/2;					
 		list = new ArrayList<Square>();
 		setDirection(Direction.RIGHT);		//Right = default direction
-		nextdirection = Direction.RIGHT;
+		nextdirection = new LinkedList<>();
+		nextdirection.add(Direction.RIGHT);
 		food = new Food(width-squaresize, height-squaresize);		//Food Object
 		gui = new GUI(width, height+20, squaresize, list);
 		score = 0;
@@ -102,7 +104,11 @@ public class Logic extends JFrame implements KeyListener{
 		
 	}
 	public boolean step() throws Exception{			//Returns false if you hit the snake
-		setDirection(nextdirection);
+		if(!nextdirection.isEmpty()){
+			if(legalMove(nextdirection.getFirst()))
+				setDirection(nextdirection.getFirst());
+			nextdirection.removeFirst();
+		}
 		currentX+=x;								//Adds direction change to the current position
 		currentY+=y;
 		outOfBounds();								//Checks for out of bounds and puts snake at opposite direction
@@ -137,27 +143,31 @@ public class Logic extends JFrame implements KeyListener{
 		}
 		
 	}
+	public boolean legalMove(Direction dir){
+		if(dir == Direction.LEFT && direction == Direction.RIGHT)
+			return false;
+		if(dir == Direction.RIGHT && direction == Direction.LEFT)
+			return false;
+		if(dir == Direction.UP && direction == Direction.DOWN)
+			return false;
+		if(dir == Direction.DOWN && direction == Direction.UP)
+			return false;
+		
+		return true;
+	}
 	public void keyTyped(KeyEvent e){}		//Key Events
 	public void keyPressed(KeyEvent e){
 		if(e.getKeyCode() == KeyEvent.VK_RIGHT){
-			if(direction != Direction.LEFT){
-				nextdirection = Direction.RIGHT;
-			}
+				nextdirection.add(Direction.RIGHT);
 		}
 		if(e.getKeyCode() == KeyEvent.VK_LEFT){
-			if(direction != Direction.RIGHT){
-				nextdirection = Direction.LEFT;
-			}
+				nextdirection.add(Direction.LEFT);			
 		}
 		if(e.getKeyCode() == KeyEvent.VK_UP){
-			if(direction != Direction.DOWN){
-				nextdirection = Direction.UP;
-			}
+				nextdirection.add(Direction.UP);
 		}
 		if(e.getKeyCode() == KeyEvent.VK_DOWN){
-			if(direction != Direction.UP){
-				nextdirection = Direction.DOWN;
-			}
+				nextdirection.add(Direction.DOWN);
 		}
 	}
 	public void keyReleased(KeyEvent e){}
